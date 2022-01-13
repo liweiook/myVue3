@@ -1,0 +1,8 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+# 对所有src下的文件进行fix
+# eslint --fix ./src --ext .vue,.js,.ts
+
+# 安装lint-staged后只对修改的进行--fix
+npx lint-staged

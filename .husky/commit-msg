@@ -1,0 +1,5 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+#commit信息不规范不允许通过
+npx --no-install commitlint --edit

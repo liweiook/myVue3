@@ -10,7 +10,7 @@ module.exports = {
       typescript: {} // this loads <rootdir>/tsconfig.json to eslint
     }
   },
-  extends: ['plugin:vue/vue3-essential', 'airbnb-base', 'prettier'],
+  extends: ['plugin:vue/vue3-essential', 'airbnb-base', 'prettier', 'plugin:jest/recommended'],
   parserOptions: {
     ecmaVersion: 13,
     parser: '@typescript-eslint/parser',
