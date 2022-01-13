@@ -13,5 +13,5 @@ import 'element-plus/dist/index.css'
 // 使用pinia
 import pinia from '@/store/pinia'
 import App from './App.vue'
-// 链式调用
+// 链式调用s
 createApp(App).use(pinia).use(router).use(ElementPlus).mount('#app')
