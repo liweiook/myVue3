@@ -1,44 +1,105 @@
-import Axios from 'axios'
-import { ElMessage } from 'element-plus'
+import axios, { AxiosRequestConfig } from 'axios'
+import NProgress from 'nprogress'
+// import { ElMessage } from 'element-plus'
 
-const baseURL = 'http://api.github.com'
+// 设置请求头和请求路径
+axios.defaults.baseURL = '/api'
+axios.defaults.timeout = 10000
+axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8'
 
-const axios = Axios.create({
-  baseURL,
-  timeout: 10000
+// 请求拦截
+axios.interceptors.request.use(
+  (config): AxiosRequestConfig<any> => {
+    const token = window.sessionStorage.getItem('token')
+    if (token) {
+      // @ts-ignore
+      config.headers.token = token
+    }
+    return config
+  },
+  error => error
+)
+
+// 响应拦截
+axios.interceptors.response.use(res => {
+  if (res.data.code === 111) {
+    sessionStorage.setItem('token', '')
+    // token过期操作
+  }
+  return res
 })
 
-// 前置拦截器 （发起请求之前的拦截）
-axios.interceptors.request.use(
-  config =>
-    /**
-     * 需要根据项目实际情况来对 config 做处理
-     * 这里对 config 不做任何处理，直接返回
-     */
-    config,
-  error => Promise.reject(error)
-)
+interface ResType<T> {
+  code: number
+  data?: T
+  msg: string
+  err?: string
+}
 
-// 后置拦截器（获取到响应时的拦截）
-axios.interceptors.response.use(
-  response =>
-    /**
-     * 根据项目实际情况来对 response 和 error 做处理
-     * 这里对 response 和 error 不做任何处理，直接返回
-     */
-    response,
-  error => {
-    if (error.response && error.response.data) {
-      const code = error.response.status
-      const msg = error.response.data.message
-      ElMessage.error(`Code:${code},Messagee:${msg}`)
-      // eslint-disable-next-line
-      console.log(`Axios Error`, 'error.response')
-    } else {
-      ElMessage.error(`${error}`)
+interface Http {
+  get<T>(url: string, params?: unknown): Promise<ResType<T>>
+  post<T>(url: string, params?: unknown): Promise<ResType<T>>
+  upload<T>(url: string, params?: unknown): Promise<ResType<T>>
+  download(url: string): void
+}
+
+const http: Http = {
+  get(url, params) {
+    return new Promise((resolve, reject) => {
+      NProgress.start()
+      axios
+        .get(url, { params })
+        .then(res => {
+          NProgress.done()
+          resolve(res.data)
+        })
+        .catch(err => {
+          NProgress.done()
+          reject(err.data)
+        })
+    })
+  },
+  post(url, params) {
+    return new Promise((resolve, reject) => {
+      NProgress.start()
+      axios
+        .post(url, JSON.stringify(params))
+        .then(res => {
+          NProgress.done()
+          resolve(res.data)
+        })
+        .catch(err => {
+          NProgress.done()
+          reject(err.data)
+        })
+    })
+  },
+  upload(url, file) {
+    return new Promise((resolve, reject) => {
+      NProgress.start()
+      axios
+        .post(url, file, {
+          headers: { 'Content-Type': 'multipart/form-data' }
+        })
+        .then(res => {
+          NProgress.done()
+          resolve(res.data)
+        })
+        .catch(err => {
+          NProgress.done()
+          reject(err.data)
+        })
+    })
+  },
+  download(url) {
+    const iframe = document.createElement('iframe')
+    iframe.style.display = 'none'
+    iframe.src = url
+    iframe.onload = function () {
+      document.body.removeChild(iframe)
     }
-    return Promise.reject(error)
+    document.body.appendChild(iframe)
   }
-)
+}
 
-export default axios
+export default http

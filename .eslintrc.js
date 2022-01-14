@@ -49,6 +49,9 @@ module.exports = {
     'global-require': ['off'],
     'import/no-dynamic-require': ['off'],
     // 允许匿名函数
-    'func-names': ['off']
+    'func-names': ['off'],
+    // 不检查接口中函数的参数
+    'no-unused-vars': ['off'],
+    '@typescript-eslint/no-unused-vars': ['error']
   }
 }
