@@ -1,0 +1,21 @@
+{
+  "peacock.color": "#215732",
+  "workbench.colorCustomizations": {
+    "titleBar.activeBackground": "#215732",
+    "titleBar.activeForeground": "#e7e7e7",
+    "titleBar.inactiveBackground": "#21573299",
+    "titleBar.inactiveForeground": "#e7e7e799"
+  },
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true,
+    "**/*.docx": true,
+    "**/*.mp4": true,
+    "**/*.pptx": true,
+    "**/node_modules": true
+  }
+}

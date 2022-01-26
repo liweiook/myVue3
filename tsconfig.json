@@ -9,6 +9,8 @@
     "moduleResolution": "node",
     // 是否启动所有类型检查，如果设为true会同时开启几个严格检查，默认为false
     "strict": true,
+    // 没有设置明确类型的值(any)是否报错
+    "noImplicitAny": false,
     // jsx代码用于的开发环境:'preserve','react-native',or 'react
     "jsx": "preserve",
     // 编译时是否生成.map文件
@@ -19,21 +21,15 @@
     "baseUrl": "./",
     // 路径映射
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "#/*": ["src/types/*"]
     },
     // 要包含在编译中的库文件
     "lib": ["esnext", "dom"],
     // 忽略声明文件（ *.d.ts）的类型检查。
     "skipLibCheck": true,
     // 指定需要包含的模块，只有在这里列出的模块的声明文件才会被加载
-    "types": ["vite/client", "jest"]
+    "types": ["vite/client", "jest", "node"]
   },
-  "include": [
-    "src/**/*.ts",
-    "tests/**/*.ts",
-    "src/**/*.d.ts",
-    "src/**/*.tsx",
-    "src/**/*.vue",
-    "env.d.ts"
-  ]
+  "include": ["src/**/*.ts", "tests/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "env.d.ts", "src/utils/ruoyi.js"]
 }

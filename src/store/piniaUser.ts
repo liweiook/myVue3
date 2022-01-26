@@ -4,9 +4,10 @@ import { defineStore } from 'pinia'
 
 export const useUserStore = defineStore({
   id: 'user', // id必填,且唯一
-  // 必须要使用箭头函数，不然name的类型推断会出错
+  // state必须要使用箭头函数，不然name的类型推断会出错
   // 如果要return的是Object类型，则不能为x=>{name:'张三'},需要改为x=>({name:'张三'})
   state: () => ({ name: '张三', age: 18, gender: '男' }),
+  // actions不要使用箭头函数，不然this指向不明
   actions: {
     updateName(name: string) {
       this.name = name

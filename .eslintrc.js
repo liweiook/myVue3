@@ -16,7 +16,7 @@ module.exports = {
     parser: '@typescript-eslint/parser',
     sourceType: 'module'
   },
-  plugins: ['vue', '@typescript-eslint'],
+  plugins: ['vue', '@typescript-eslint', 'jest'],
   rules: {
     // import引入文件不检查后缀名
     'import/extensions': ['off'],
@@ -50,6 +50,8 @@ module.exports = {
     'import/no-dynamic-require': ['off'],
     // 允许匿名函数
     'func-names': ['off'],
+
+    /*  ---vue3+typescript--- */
     // 不检查接口中函数的参数
     'no-unused-vars': ['off'],
     '@typescript-eslint/no-unused-vars': ['error']
